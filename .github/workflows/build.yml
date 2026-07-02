@@ -1,9 +1,13 @@
-name: CoreKernel Build
+name: CoreKernel Build & Release
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
+
+# Permissão obrigatória para que o bot do GitHub Actions possa criar Releases
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -22,7 +26,14 @@ jobs:
             g++-multilib \
             nasm \
             grub-pc-bin \
-            xorriso
+            grub-common \
+            xorriso \
+            mtools
+
+      - name: Fix grub command for Ubuntu
+        run: |
+          # Cria um alias global para que o Ubuntu entenda 'grub2-mkrescue'
+          sudo ln -s /usr/bin/grub-mkrescue /usr/local/bin/grub2-mkrescue
 
       - name: Make scripts executable
         run: |
@@ -38,3 +49,13 @@ jobs:
         with:
           name: corekernel-iso
           path: build/kernel.iso
+
+      - name: Create GitHub Release
+        # Gera a release automaticamente APENAS quando o push for na branch main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.sha }}
+          name: "CoreKernel Build (${{ github.sha }})"
+          body: "Build gerada automaticamente a partir do commit principal."
+          files: build/kernel.iso
