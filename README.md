@@ -102,12 +102,12 @@ This project is focused on understanding OS internals by building everything man
 
 ---
 
-## License
+** "Tudo o que fizerem, façam de todo o coração, como para o Senhor, e não para os homens, sabendo que receberão do Senhor a recompensa da herança. É a Cristo, o Senhor, que vocês estão servindo." **
 
-MIT
+**Colossenses 3:23–24**
 
 ---
 
-> **"Tudo o que fizerem, façam de todo o coração, como para o Senhor, e não para os homens, sabendo que receberão do Senhor a recompensa da herança. É a Cristo, o Senhor, que vocês estão servindo."**
+## License
 
-**Colossenses 3:23–24**
+MIT
