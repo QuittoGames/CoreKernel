@@ -1,0 +1,40 @@
+name: CoreKernel Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential \
+            gcc-multilib \
+            g++-multilib \
+            nasm \
+            grub-pc-bin \
+            xorriso
+
+      - name: Make scripts executable
+        run: |
+          chmod +x tools/build.sh
+          chmod +x tools/run.sh
+
+      - name: Build Kernel ISO
+        run: |
+          ./tools/build.sh
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: corekernel-iso
+          path: build/kernel.iso
