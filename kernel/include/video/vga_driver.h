@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include "../../lib/coreTypes/string.h"
 
 class VGADriver {
 private:
@@ -11,5 +12,7 @@ public:
     ~VGADriver();
 
     void clear();
+    void print(String& str);
+    void print(String str);
     void print(const char* str);
 };

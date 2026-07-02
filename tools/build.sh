@@ -27,13 +27,15 @@ nasm -f elf32 boot/boot.asm -o $OBJ_DIR/boot.o
 echo "Compilando kernel..."
 g++ $CXXFLAGS -c kernel/core/kernel.cpp -o $OBJ_DIR/kernel.o
 g++ $CXXFLAGS -c kernel/drivers/video/vga_driver.cpp -o $OBJ_DIR/vga.o
+g++ $CXXFLAGS -c kernel/lib/coreTypes/string.cpp -o $OBJ_DIR/string.o
 
 echo "Linkando kernel..."
 ld -m elf_i386 -nostdlib -T linker/linker.ld \
 -o $BUILD_DIR/kernel.bin \
 $OBJ_DIR/boot.o \
 $OBJ_DIR/kernel.o \
-$OBJ_DIR/vga.o
+$OBJ_DIR/vga.o \
+$OBJ_DIR/string.o
 
 echo "Preparando ISO..."
 cp $BUILD_DIR/kernel.bin $ISO_DIR/kernel.bin
